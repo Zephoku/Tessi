@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -8,6 +7,14 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
+
+//mongo JS 
+
+//for heroku
+//var dbURL = "mongodb://localhost/codeondb";
+var dbURL = "codeondb";
+var collections = ["tutorials"];
+var db = require("mongojs").connect(dbURL,collections);
 
 var app = express();
 
@@ -35,4 +42,11 @@ app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+//action definitions
+app.post('/submitFunctionName', function(req, res) {
+    db.tutorials.save({"implTitle": req.body.content}, function(err, status) {
+        console.log("function "+ req.body.content + " saved!");
+    });
 });
