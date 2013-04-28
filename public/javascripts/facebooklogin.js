@@ -121,13 +121,15 @@ socket.on('ack', function(data) {
                 var likes = photoList[photoIndex].likes.data;
               else
                 continue;
-              if(likes.length>=50) {
+              if(likes.length>=2) {
+
                 // push badge to photo db
                 user_badges.push({
                   name: 'Camera Sweetheart',
                   type: 'photo',
                   content: photoList[photoIndex].images[0].source
-                })
+                });
+                break;
               }
             }
           }
@@ -164,6 +166,7 @@ socket.on('ack', function(data) {
                     type: 'events',
                     content: "I'm going to " + name
                   });
+                  break;
                 }
               }
             }
@@ -193,11 +196,12 @@ socket.on('ack', function(data) {
              for(var i = 0; i < status_posts.length; i++) {
                 var post = status_posts[i];
                 if (post["likes"] && post.likes.data.length >= 20) {
-                        user_badges.push({
-                                name: 'Too Many Likes',
-                                type: 'status',
-                                content: post.data.message
-                        });
+                  user_badges.push({
+                    name: 'Too Many Likes',
+                    type: 'status',
+                    content: post.data.message
+                  });
+                  break;
                 }
               }
           }
@@ -211,6 +215,7 @@ socket.on('ack', function(data) {
                   type: "status",
                   content: post.data.message
                 });
+                break;
               }
             }
           }
@@ -227,12 +232,13 @@ socket.on('ack', function(data) {
 
         this.wuTanClan = function(likes) {
             for(var i = 0; i < likes.length; i++) {
-                if (likes[i].category == "Sport") {
+                if (likes[i].category == "Actor/director") {
                     user_badges.push({
                         name: 'Wu Tan Clan',
                         type: 'interest',
                         content: likes[i].name
                     });
+                    break;
                 }
             }
         } 
@@ -268,7 +274,7 @@ socket.on('ack', function(data) {
 
             console.debug(user_badges);
 
-            
+
             //730148408?fields=photos.fields(likes)
             //console.log(data.photos.);
             //this.cameraSweetHeart(data.photos.fields);  // Over 50 likes on photo
@@ -292,7 +298,7 @@ socket.on('ack', function(data) {
 
         function callFBGraph() {
           console.debug("callFBGraph"); 
-          FB.api('/me?fields=photos.fields(likes),statuses.limit(10),events,relationship_status,likes', function(response) {
+          FB.api('/me?fields=photos,statuses.limit(10),events,relationship_status,likes', function(response) {
             //console.debug(response)
 
             var bl = new badgeLogics(response);
