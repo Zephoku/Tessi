@@ -5,10 +5,11 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
+    <div id="fb-root"></div>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-    <form action="/submitFunctionName" method="post" accept-charset="utf-8">
-      <input type="text" name="content" />
-    </form>
+    <button type="button" onclick="getLogin();">Login to Facebook</button>
   </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/javascripts/facebooklogin.js"></script>
 </html>
