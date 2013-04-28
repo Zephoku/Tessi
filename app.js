@@ -10,7 +10,7 @@ var express = require('express')
 //for heroku
 //var dbURL = "mongodb://localhost/codeondb";
 var dbURL = "codeondb";
-var collections = ["tutorials"];
+var collections = ["users"];
 var db = require("mongojs").connect(dbURL,collections);
 
 var app = express();
@@ -52,6 +52,29 @@ io.sockets.on('connection', function (socket) {
     socket.on('userID', function (data) {
         if (data.userID) {
             console.log("facebook userID retrieved "+ data.userID);
+            db.users.find({
+                userID:data.userID
+            }, function(err, users) {
+                if (!users && !err) {
+                    //create new user if it doesn't exist
+                    console.log("new user " + data.userID +
+                                "constructing new db instance!");
+                    db.users.save({
+                        userID:data.userID,
+                        lifeInstances:[]
+                    }, function (err, status) {
+                        console.log("new user " + data.userID + " created!");
+                    });
+                    
+                } else if (err) {
+                    console.log("db error inside socket.io " + err);
+                } else if (users && !err) {
+                    //the user exist, there can only be one user
+                    console.log("user " + data.userID + " exists, updating instances");
+                }
+                
+            });
+            
         } else {
             console.log("error retrieving facebook user ID");
         }
