@@ -45,11 +45,50 @@ server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+/* returns true if everything is ok */ 
+function validateUsers(err, users) {
+	if (!users && !err) {
+      console.log("user doesn't exist"); 
+      return false;
+  } else if (err) {
+      console.log("db error inside socket.io " + err);
+      return false;
+  } else if (users.length !== 0 && !err) {
+      return true;
+  }
+}
+
 //socket.io setup
 io.sockets.on('connection', function (socket) {
     //initialize sockets
     socket.emit('ack', {init: true});
-    socket.on('userID', function (data) {
+
+    // requesting user data based on user key
+    socket.on('userBadgeRequest', function(user_data) {
+    	db.users.find({
+    		userID: user_data.userID
+    	}, function(err, users) {
+    		if (users.length !== 0 && !err) {
+    			socket.emit('userBadgeResponse', 
+    				{userID: user_data.userID, badges:users[0].badges});
+    		}
+    	})
+    });
+
+    // add a new badge 
+    socket.on('userBadgeUpdate', function(user_data) {
+    	db.user.find({userID: user_data.userID}, function(err, users) {
+    		if(validateUsers(err, users)) {
+    			users[0].badges[user_data.badgename] = db.badges.find({name: badgename});
+    			db.user.update({userID:user_data.userID}, 
+    				{$set: users[0].badges})
+    			console.log(users[0].badges);
+    		}
+    	})
+    });
+
+    // inserting and updating user data
+    socket.on('userData', function (data) {
         if (data.userID) {
             console.log("facebook userID retrieved "+ data.userID);
             db.users.find({
@@ -60,8 +99,7 @@ io.sockets.on('connection', function (socket) {
                     console.log("new user " + data.userID +
                                 "constructing new db instance!");
                     db.users.save({
-                        userID:data.userID,
-                        lifeInstances:[]
+                        userID:data.userID
                     }, function (err, status) {
                         console.log("new user " + data.userID + " created!");
                     });
