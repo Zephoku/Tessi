@@ -35,7 +35,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/user', routes.user);
+//app.get('/users', user.list);
 
 //socket for server-client side communication
 var io = require('socket.io').listen(server);
@@ -72,9 +73,12 @@ io.sockets.on('connection', function (socket) {
     		userID: user_data.userID
     	}, function(err, users) {
     		if (users.length !== 0 && !err) {
-    			socket.emit('userBadgeResponse', 
+          console.log("user found!");
+    			socket.emit('userBadgeResponseUser', 
     				{userID: user_data.userID, badges:users[0].badges});
-    		}
+    		  socket.emit('userBadgeResponse', 
+            {userID: user_data.userID, badges:users[0].badges});
+        }
     	})
     });
 
@@ -87,7 +91,7 @@ io.sockets.on('connection', function (socket) {
     		}
     		console.log(user_badges.badges[0]);
     	})
-    })
+    });
 
     // inserting and updating user data
     socket.on('userData', function (data) {
@@ -119,5 +123,12 @@ io.sockets.on('connection', function (socket) {
             console.log("error retrieving facebook user ID");
         }
     });
+/*
+    socket.on('redirect', function(data) {
+        app.get('/user', function(req, res) {
+          
+        });
+    });
+*/
 });
 

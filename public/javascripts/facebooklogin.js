@@ -286,10 +286,12 @@ socket.on('ack', function(data) {
             updateUserBadges(user_badges, user_id);
             getUserBadges()
 
-            console.debug(user_badges);
+            console.debug(JSON.stringify(user_badges));
+            
+
             //document.location.href = '/user';
 
-            socket.emit('redirect', {redirect:true});
+            //socket.emit('redirect', {redirect:true});
             //730148408?fields=photos.fields(likes)
             //console.log(data.photos.);
             //this.cameraSweetHeart(data.photos.fields);  // Over 50 likes on photo
