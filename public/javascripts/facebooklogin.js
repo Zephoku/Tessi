@@ -5,7 +5,7 @@ socket.on('ack', function(data) {
         // Additional JS functions here
         window.fbAsyncInit = function() {
             FB.init({
-                appId      : '443581165736594', // App ID
+                appId      : '333483723421810', // App ID
                 channelUrl : './channel.html', // Channel File
                 status     : true, // check login status
                 cookie     : true, // enable cookies to allow the server to access the session
@@ -50,9 +50,11 @@ socket.on('ack', function(data) {
                     console.log("UserID: " + uid);
                 } else if (response.status === 'not_authorized') {
                     // not_authorized
+                    console.log("not authorized");
                     login();
                 } else {
                     // not_logged_in
+                    console.log("not logged in");
                     login();
                 }
                 
@@ -63,7 +65,11 @@ socket.on('ack', function(data) {
             console.log('Welcome!  Fetching your information.... ');
             FB.api('/me', function(response) {
                 console.log('Good to see you, ' + response.name + '.');
+
+                searchForUser(response.id);
             });
+
+
         }
 
 
@@ -75,5 +81,26 @@ socket.on('ack', function(data) {
             js.src = "//connect.facebook.net/en_US/all.js";
             ref.parentNode.insertBefore(js, ref);
         }(document));
-    }
+    
+
+        function searchForUser(id) {
+            db.users.find({id: id}, function(err, users) {
+              if( err || !users) {
+                console.log("user not found");
+                insertToDB(id);
+              } else users.forEach( function(user) {
+                console.log("user exists, pulling old data");
+                console.log(user);
+              } );
+            });
+        }
+
+        function insertToDB() {
+          FB.api('/me?fields=name,education', function(response) {
+            console.log(response);
+          });
+        }
+
+      }
+    
 });
