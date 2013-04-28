@@ -30,8 +30,18 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
+//app.get('/', routes.index);
+app.get('/', function (req, res) {
+    res.render('index',
+        { title : 'Code On | Home' }
+          )
+})
 app.get('/users', user.list);
+app.get('/search', function (req, res) {
+    res.render('search',
+        { title : 'Code On | Search' }
+          )
+})
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
