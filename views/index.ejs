@@ -3,13 +3,13 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/facebooklogin.js"></script>
   </head>
   <body>
     <div id="fb-root"></div>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-    <button type="button" onclick="getLogin();">Login to Facebook</button>
+    <button type="button" id="FacebookLogin">Login to Facebook</button>
   </body>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/javascripts/facebooklogin.js"></script>
 </html>

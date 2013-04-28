@@ -26,6 +26,9 @@ socket.on('ack', function(data) {
             });
         };
 
+        //event listeners
+        document.getElementById("FacebookLogin").addEventListener("click", getLogin, false);
+      
         function login() {
             FB.login(function(response) {
                 if (response.authResponse) {
@@ -36,7 +39,7 @@ socket.on('ack', function(data) {
                 }
             });
         }
-
+        
         function getLogin() {
             // Additional init code here
             FB.getLoginStatus(function(response) {
