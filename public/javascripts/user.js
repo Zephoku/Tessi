@@ -1,11 +1,8 @@
 var socket = io.connect('http://localhost:3000');
 socket.on('ack', function(data) {
-	$(document).ready(function(){
 		console.log("socket!");
 		var html;
-		var user_badges_ 
-			= '[{"name":"Viva La Papel!","url":"/img/check_in_library.png","type":"place","content":"{\"street\":\"220 Powell Library Building\",\"city\":\"Los Angeles\",\"state\":\"CA\",\"country\":\"United States\",\"zip\":\"90095 \",\"latitude\":34.071823430229,\"longitude\":-118.44226221743}"},{"name":"Can I Haz Cheeseburger?","type":"place","url":"/img/check_in_food.png","content":"{\"street\":\"875 N Wilcox Ave\",\"city\":\"Montebello\",\"state\":\"CA\",\"country\":\"United States\",\"zip\":\"90640-1801\",\"latitude\":34.032269635641,\"longitude\":-118.12607202}"},{"name":"Camera Sweetheart","url":"/img/50photolikes.png","type":"photo","content":"http://sphotos-b.xx.fbcdn.net/hphotos-snc7/581624_2959459002209_971152391_n.jpg"},{"name":"Life is Complete","url":"/img/relation_to_single.png","type":"relationship","content":"Single"}]'
-        var user_badges = JSON.parse(user_badges_)
+        var user_badges;
         socket.emit('userBadgeRequest', {userID: 730148408});
         console.debug("request emitted");
 		socket.on('userBadgeResponseUser', function(user_data){
@@ -42,9 +39,6 @@ socket.on('ack', function(data) {
 				}
 
 			    }
-
-
-			});
 		
 		$('#todaylistadd').prepend(html);});
     });

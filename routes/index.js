@@ -9,3 +9,9 @@ exports.index = function(req, res){
     });
 };
 
+
+exports.user = function(req, res){
+    res.render('user', { 
+        title: 'Hey You'
+    });
+};

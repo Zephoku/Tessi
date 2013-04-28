@@ -51,11 +51,11 @@ socket.on('ack', function(data) {
                     
                 } else if (response.status === 'not_authorized') {
                     // not_authorized
-                    console.log("not authorized");
+                    //console.log("not authorized");
                     login();
                 } else {
                     // not_logged_in
-                    console.log("not logged in");
+                    //console.log("not logged in");
                     login();
                 }
                 
@@ -71,10 +71,12 @@ socket.on('ack', function(data) {
 
           var user_badges = [];
 
+
           function getUserBadges() {
             socket.emit('userBadgeRequest', {userID: user_id})
             socket.on('userBadgeResponse', function(user_data){
               user_badges = user_data.badges;
+              console.debug("getUserBadges " + user_badges);
             })
           }
 
@@ -85,7 +87,7 @@ socket.on('ack', function(data) {
           this.vivaLaPapel = function(status_posts) {
             for(var i = 0; i < status_posts.length; i++) {
               post = status_posts[i];
-              console.debug(post);
+              //console.debug(post);
               if(post.place && post.place.name.indexOf('Library') != -1) {  
                 user_badges.push({ 
                       name: 'Viva La Papel!', 
@@ -205,6 +207,7 @@ socket.on('ack', function(data) {
              for(var i = 0; i < status_posts.length; i++) {
                 var post = status_posts[i];
                 if (post["likes"] && post.likes.data.length >= 20) {
+
                   user_badges.push({
                     name: 'Too Many Likes',
                     url :'/img/likes_on_status.png',
@@ -260,7 +263,9 @@ socket.on('ack', function(data) {
       this.run = function() {
             getUserBadges();
 
-            this.user_id = Data.id;
+            user_id = Data.id;
+
+            console.debug(this.user_id);
             if (Data["statuses"]  && (Data["statuses"])["data"]) {
               this.tooManyLikes(Data.statuses.data);
               this.vivaLaPapel(Data.statuses.data);  //Checked into library
@@ -271,7 +276,7 @@ socket.on('ack', function(data) {
             if (Data["photos"]) {
               this.cameraSweetHeart(Data.photos);
             }
-            console.debug(Data)
+            //console.debug(Data)
             if (Data["likes"] && (Data["likes"])["data"]) {
               this.wuTanClan(Data.likes.data);
             }
@@ -282,11 +287,12 @@ socket.on('ack', function(data) {
             this.flyOnTheWall(Data);
             this.lifeIsComplete(Data);
 
-            console.debug(user_badges);
+            //console.debug(user_badges);
             updateUserBadges(user_badges, user_id);
             getUserBadges()
 
-            console.debug(JSON.stringify(user_badges));
+            console.debug(user_badges);
+            console.debug(user_id);
             
 
             //document.location.href = '/user';
@@ -316,7 +322,7 @@ socket.on('ack', function(data) {
         function callFBGraph() {
           console.debug("callFBGraph"); 
           FB.api('/me?fields=photos,statuses.limit(10),events,relationship_status,likes', function(response) {
-            //console.debug(response)
+            console.debug(response)
 
             var bl = new badgeLogics(response);
             bl.run();

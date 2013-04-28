@@ -69,11 +69,12 @@ io.sockets.on('connection', function (socket) {
 
     // requesting user data based on user key
     socket.on('userBadgeRequest', function(user_data) {
-    	db.users.find({
+    	console.log("user data requested!!!!!");
+      db.users.find({
     		userID: user_data.userID
     	}, function(err, users) {
     		if (users.length !== 0 && !err) {
-          console.log("user found!");
+          console.log("user found!!!!!");
     			socket.emit('userBadgeResponseUser', 
     				{userID: user_data.userID, badges:users[0].badges});
     		  socket.emit('userBadgeResponse', 
@@ -89,7 +90,6 @@ io.sockets.on('connection', function (socket) {
     			db.user.update({userID:ser_data.userID}, 
     				{$set: user_badges.badges});
     		}
-    		console.log(user_badges.badges[0]);
     	})
     });
 
