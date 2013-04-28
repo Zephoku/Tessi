@@ -48,6 +48,7 @@ socket.on('ack', function(data) {
                     // connected
                     //var uid = response.authResponse.userID;
                     //console.log("UserID: " + uid);
+                    document.location.href = '/user'
                 } else if (response.status === 'not_authorized') {
                     // not_authorized
                     console.log("not authorized");
@@ -275,7 +276,7 @@ socket.on('ack', function(data) {
 
             console.debug(user_badges);
 
-
+            //socket.emit('redirect', {redirect:true});
             //730148408?fields=photos.fields(likes)
             //console.log(data.photos.);
             //this.cameraSweetHeart(data.photos.fields);  // Over 50 likes on photo
