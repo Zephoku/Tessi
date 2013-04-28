@@ -36,7 +36,7 @@ socket.on('ack', function(data) {
                 } else {
                     // cancelled
                 }
-            }, {scope:'user_status, user_photos'});
+            }, {scope:'user_status, user_photos, user_likes, user_relationships'});
         }
         
         function getLogin() {
@@ -84,11 +84,11 @@ socket.on('ack', function(data) {
           this.vivaLaPapel = function(status_posts) {
             for(var i = 0; i < status_posts.length; i++) {
               post = status_posts[i];
-              //console.debug(post);
+              console.debug(post);
               if(post.place && post.place.name.indexOf('Library') != -1) {  
                 user_badges.push({ name: 'Viva La Papel!', 
                       type: 'place',
-                      content: JSON.stringify(post.location)
+                      content: JSON.stringify(post.place["location"])
                     });
                 break;
               }
@@ -106,7 +106,7 @@ socket.on('ack', function(data) {
                     ) ) {  
                 user_badges.push({ name: 'Can I Haz Cheeseburger?', 
                       type: 'place',
-                      content: JSON.stringify(post["location"])
+                      content: JSON.stringify(post.place["location"])
                     });
                 break;
               }
@@ -232,7 +232,8 @@ socket.on('ack', function(data) {
 
         this.wuTanClan = function(likes) {
             for(var i = 0; i < likes.length; i++) {
-                if (likes[i].category == "Actor/director") {
+                //console.debug(likes[i].category)
+                if (likes[i].category == "Sport") {
                     user_badges.push({
                         name: 'Wu Tan Clan',
                         type: 'interest',
@@ -257,16 +258,16 @@ socket.on('ack', function(data) {
             if (Data["photos"]) {
               this.cameraSweetHeart(Data.photos);
             }
-
+            console.debug(Data)
             if (Data["likes"] && (Data["likes"])["data"]) {
               this.wuTanClan(Data.likes.data);
             }
+
             this.lovebirds(Data);
             this.aRealGuitarHero(Data);
             this.letThemEatCake(Data);
             this.flyOnTheWall(Data);
             this.lifeIsComplete(Data);
-
 
             console.debug(user_badges);
             updateUserBadges(user_badges, user_id);
