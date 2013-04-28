@@ -36,7 +36,7 @@ socket.on('ack', function(data) {
                 } else {
                     // cancelled
                 }
-            }, {scope:'user_status'});
+            }, {scope:'user_status, user_photos'});
         }
         
         function getLogin() {
@@ -63,25 +63,14 @@ socket.on('ack', function(data) {
             });
         }
 
-        /* checks if badge already exists for the user */
-        function checkForBadge(badgename, badgelist) {
-          for(var badge in badgelist) {
-            if (badge.name === badgename) {
-              return true;
-            }
-          }
-          return false;
-        }
 
-        function giveNewBadge(badgename, userID) {
-          socket.emit('userBadgeUpdate', {userID: user_id, badgename: badgename});
-        }
 
         function testAPI() {
           console.debug("testAPi"); 
-          FB.api('/me?fields=statuses', function(response) {
-            console.debug("sending user badge request")
-
+          FB.api('/me?fields=photos.fields(likes),statuses.limit(10)', function(response) {
+            console.debug(response)
+            /*
+            console.debug(response);
             socket.emit('userBadgeRequest',{userID:response.id});
             var my_badges;
             socket.on('userBadgeResponse', function(user_badge_data){
@@ -109,12 +98,8 @@ socket.on('ack', function(data) {
                 console.debug(status.place.location);
               }
             }
+            */
           });
         }
-
-
-        
-
       }
-    
 });

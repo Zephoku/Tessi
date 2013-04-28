@@ -58,6 +58,9 @@ function validateUsers(err, users) {
   }
 }
 
+
+
+
 //socket.io setup
 io.sockets.on('connection', function (socket) {
     //initialize sockets
@@ -117,6 +120,50 @@ io.sockets.on('connection', function (socket) {
             console.log("error retrieving facebook user ID");
         }
     });
+
+
+	/*
+		BADGE LOGIC 
+	*/
+	function badgeLogics (data) {
+		this.data = data;
+
+		function giveNewBadge(badgename, userID) {
+	    socket.emit('userBadgeUpdate', {userID: user_id, badgename: badgename});
+	  }
+
+	  /* checks if badge already exists for the user */
+    function checkForBadge(badgename, badgelist) {
+      for(var badge in badgelist) {
+        if (badge.name === badgename) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+		this.cameraSweetHeart = function(photos) {
+
+		};
+
+		this.run = function() {
+			//730148408?fields=photos.fields(likes)
+			this.cameraSweetHeart(data.photos.fields);	// Over 50 likes on photo
+			/*
+			this.canIHazCheeseburger(data.location);	// Checked into restaurant
+			this.lovebirds(data.relationship);	// Got into relationship
+			this.vivaLaPapel(data.location);	//Checked into library
+			this.aRealGuitarHero(data.location);	// checked into a concert
+			this.flyOnTheWall(data.relationship); // it's complicated
+			this.gleefulPopularity(data.status); //Over 10 people comment on your status 
+			this.letThemEatCake(data.birthday); 	// birthday
+			this.lifeIsComolete(data.relationship);	// breakup
+			this.wuTanClan();	//has more than 3 sports interest 
+			this.tooManyLikes(); 	// 20+ likes on a status post
+			*/
+		};
+
+	}
 });
 
 //action definitions
