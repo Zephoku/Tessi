@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Tessi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 800px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+      .hero-unit{
+        background-color: rgba(135,206,250,0.5);
+      }
+      #dynamiclist {
+        color: black;
+        font-family: verdana;
+        font-size: 20px;
+      }
+      #todaylist {
+        background-color: #E8D59F;
+        text-align: left;
+        border-radius: 20px;
+        text-indent: 25px;
+        opacity: 1.0;
+        margin-bottom: 20px;
+      }
+      #yesterdaylist {
+        background-color: #E8D59F;
+        text-align: left;
+        border-radius: 20px;
+        text-indent: 25px;
+        opacity: 0.8;
+      }
+      #thisweeklist {
+        background-color: #E8D59F;
+        text-align: left;
+        border-radius: 20px;
+        text-indent: 25px;
+        opacity: 0.6;
+      }
+      #lastweeklist {
+        background-color: #E8D59F;
+        text-align: left;
+        border-radius: 20px;
+        text-indent: 25px;
+        opacity: 0.4;
+      }
+      #showpreviouslist {
+        background-color: #E8D59F;
+        text-align: left;
+        border-radius: 20px;
+        text-indent: 25px;
+        opacity: 0.2;
+      }
+      #todaybar {
+        background-color: rgba(135,206,250,1.0);
+      }
+      #yesterdaybar {
+        background-color: rgba(135,206,250,0.8);
+      }
+      #thisweekbar {
+        background-color: rgba(135,206,250,0.6);
+      }
+      #lastweekbar {
+        background-color: rgba(135,206,250,0.4);
+      }
+      #showpreviousbar {
+        background-color: rgba(135,206,250,0.2);
+      }
+      div.logoimage {
+        width:100px;
+        height:52px;
+      }
+      p.dynamiclisttext {
+        margin-top: -20px;
+      }
+      img.badgesonboard {
+        width:60px;
+        height: 60px;
+        align: left;
+        margin-right: 10px;
+        margin-top: 30px;
+      }
+      p.dynamiclistcaveat {
+        margin-left: 70px;
+        margin-top: -40px;
+        margin-bottom: 20px; 
+        font-family: chalkduster;
+        color: white;
+      }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
+</script>
+  </head>
+
+  <body>
+
+       <div id="fb-root"></div>
+
+  <script>
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=438009139622890";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+  </script>
+  
+<script type="text/javascript">
+$(document).ready(function(){
+  if (document.getElementById("nothinghasbeendone")) {
+    $("#nothinghasbeendone").remove();
+var arrayBadgeName = ["img/50photolikes.png","img/birthday.png","img/check_in_concert.png","img/over_5_wall_posts.png","img/relationship_complicated.png","img/relationship.png"];
+var arrayAwardName =["Camera Sweetheart","Let Them Eat Cake","A Real Guitar Hero","Gleeful Popularity","Fly On The Wall","Life Is Complete"];
+var arrayAwardNameNote = ["Over 50 likes on photo.","It is your Birthday!","Checked into concert.","Over 10 people comment.","It is complicated.","From in relationship to single."];
+var html;
+for (var temp in arrayBadgeName) {
+  if (temp == 0) {
+    html = '<div class="row"><div class="span4" id="todaylist"><p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="'+arrayBadgeName[temp]+'">'+arrayAwardName[temp]+'</p><p class="dynamiclistcaveat">'+arrayAwardNameNote[temp]+'</p></div>';
+
+  } else if (temp%2 != 0) {
+    html += '<div class="span4" id="todaylist"><p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="'+arrayBadgeName[temp]+'">'+arrayAwardName[temp]+'</p><p class="dynamiclistcaveat">'+arrayAwardNameNote[temp]+'</p></div></div>';
+
+  } else {
+      html += '<div class="row"><div class="span4" id="todaylist"><p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="'+arrayBadgeName[temp]+'">'+arrayAwardName[temp]+'</p><p class="dynamiclistcaveat">'+arrayAwardNameNote[temp]+'</p></div>';
+  }
+}
+}
+else {
+  var arrayBadgeName = ["img/50photolikes.png","img/birthday.png","img/check_in_concert.png","img/over_5_wall_posts.png","img/relationship_complicated.png","img/relationship.png"];
+var arrayAwardName =["Camera Sweetheart","Let Them Eat Cake","A Real Guitar Hero","Gleeful Popularity","Fly On The Wall","Life Is Complete"];
+var arrayAwardNameNote = ["Over 50 likes on photo.","It is your Birthday!","Checked into concert.","Over 10 people comment.","It is complicated.","From in relationship to single."];
+var html;
+for (var temp in arrayBadgeName) {
+  if (temp == 0) {
+    html = '<div class="row"><div class="span4" id="todaylist"><p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="'+arrayBadgeName[temp]+'">'+arrayAwardName[temp]+'</p><p class="dynamiclistcaveat">'+arrayAwardNameNote[temp]+'</p></div>';
+
+  } else if (temp%2 != 0) {
+    html += '<div class="span4" id="todaylist"><p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="'+arrayBadgeName[temp]+'">'+arrayAwardName[temp]+'</p><p class="dynamiclistcaveat">'+arrayAwardNameNote[temp]+'</p></div></div>';
+
+  } else {
+      html += '<div class="row"><div class="span4" id="todaylist"><p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="'+arrayBadgeName[temp]+'">'+arrayAwardName[temp]+'</p><p class="dynamiclistcaveat">'+arrayAwardNameNote[temp]+'</p></div>';
+  }
+}
+}
+$('#todaylistadd').prepend(html);});
+  </script>
+    <div class="container-narrow">
+      
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <div class="fb-login-button" autologoutlink="true" scope="publish_stream"  data-show-faces="false" data-width="200" data-max-rows="1" data-size="large"></div>
+        </ul>
+        <div class="logoimage">
+        <img src="img/TessiLogo.png">
+      </div>
+      </div>
+
+      <div class="container-narrow"> 
+
+        <h1 style="font-family:mistral; text-align: center;">Achievements Capsule</h1>
+
+        <ul class="nav nav-pills nav-stacked">
+      <li><a id="todaybar" class="hero-unit" data-toggle="collapse" href="#today">TODAY</a></li>
+            <div id="today" class="collapse in">
+               <br>
+              <div id="todaylistadd" class="span8" style="margin-left: 10px;">
+                <div id="nothinghasbeendone"><div id="todaylist" style="height:100px;"><p style="text-align:center; font-size:40px; font-family: fantasy;line-height: 100px;">Make a move and Tessime.</p></div></div>
+              <div class="row">
+              <div class="span4" id="todaylist">
+            <p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="img/50photolikes.png">Camera Sweetheart</p><p class="dynamiclistcaveat">Over 50 likes on photo.</p>
+
+            </div>
+            <div class="span4" id="todaylist" >
+              <p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="img/birthday.png">Let Them Eat Cake</p><p class="dynamiclistcaveat">It is your Birthday!</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span4" id="todaylist">
+            <p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="img/check_in_concert.png">A Real Guitar Hero</p><p class="dynamiclistcaveat">Checked into concert.</p>
+
+            </div>
+            <div class="span4" id="todaylist" >
+              <p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="img/over_5_wall_posts.png">Gleeful Popularity</p><p class="dynamiclistcaveat">Over 10 people comment.</p>
+            </div>
+              </div>
+            <div class="row">
+              <div class="span4" id="todaylist">
+            <p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="img/relationship_complicated.png">Fly On The Wall</p><p class="dynamiclistcaveat">It is complicated.</p>
+
+            </div>
+            <div class="span4" id="todaylist" >
+              <p id="dynamiclist" class="dynamiclisttext"><img class="badgesonboard" src="img/relationship.png">Life Is Complete</p><p class="dynamiclistcaveat">From in relationship to single.</p>
+            </div>
+          </div>
+            </div>
+              </div>
+            </ul>
+
+          </div>
+            <div class="container-narrow">
+             <ul class="nav nav-pills nav-stacked">
+              <li><a id="yesterdaybar" class="hero-unit" data-toggle="collapse"  href="#yesterday">YESTERDAY</a></li>
+              <div id="yesterday" class="collapse in">
+                <br>
+                <div class="span8" style="margin-left: 10px;">
+                <div id="yesterdaylist" style="height:100px;"><p style="text-align:center; font-size:40px; font-family: fantasy;line-height: 100px;">Make a move and Tessime.</p></div>
+          
+             
+            </div>
+            </div>
+            </ul>
+          </div>
+        
+        <div class="container-narrow">
+        <ul class="nav nav-pills nav-stacked">
+      <li><a id="thisweekbar" class="hero-unit" data-toggle="collapse" href="#thisweek">THIS WEEK</a></li>
+    <div id="thisweek" class="collapse in">
+              <br>
+              <div class="span8" style="margin-left: 10px;">
+                 <div id="thisweeklist" style="height:100px;"><p style="text-align:center; font-size:40px; font-family: fantasy;line-height: 100px;">Make a move and Tessime.</p></div>
+            </div>
+              </div>
+            </ul>
+
+          </div>
+
+
+      <div class="container-narrow">
+       
+        <ul class="nav nav-pills nav-stacked">
+      <li><a id="lastweekbar" class="hero-unit" data-toggle="collapse" href="#lastweek">LAST WEEK</a></li>
+    <div id="lastweek" class="collapse in">
+              <br>
+              <div class="span8" style="margin-left: 10px;">
+                 <div id="lastweeklist" style="height:100px;"><p style="text-align:center; font-size:40px; font-family: fantasy;line-height: 100px;">Make a move and Tessime.</p></div>
+            </div>
+              </div>
+            </ul>
+
+          </div>
+
+            <div class="container-narrow">
+       
+        <ul class="nav nav-pills nav-stacked">
+      <li><a id="showpreviousbar" class="hero-unit" data-toggle="collapse" href="#showprevious">SHOW PREVIOUS</a></li>
+    <div id="showprevious" class="collapse">
+              <br>
+              <div class="span8" style="margin-left: 10px;">
+                 <div id="showpreviouslist" style="height:100px;"><p style="text-align:center; font-size:40px; font-family: fantasy;line-height: 100px;">Make a move and Tessime.</p></div>
+            </div>
+              </div>
+            </ul>
+
+          </div>
+<br>
+<br>
+      <div class="footer">
+        <p>&copy; Tessi 2013</p>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+    <script src="assets/js/bootstrap-affix.js"></script>
+
+    <script src="assets/js/holder/holder.js"></script>
+    <script src="assets/js/google-code-prettify/prettify.js"></script>
+
+    <script src="assets/js/application.js"></script>
+
+
+  </body>
+</html>
