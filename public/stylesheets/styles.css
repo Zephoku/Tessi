@@ -260,3 +260,12 @@ body {
 .mission p {
   letter-spacing: -1px;
 }
+
+div.myButton input {
+  background: url(../img/facebookbtn.png) no-repeat;
+  cursor: pointer;
+  width: 200px;
+  height: 43px;
+  border: none;
+  margin-top: 3px;
+}

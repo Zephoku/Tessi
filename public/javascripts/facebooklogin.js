@@ -48,7 +48,7 @@ socket.on('ack', function(data) {
                     // connected
                     //var uid = response.authResponse.userID;
                     //console.log("UserID: " + uid);
-                    document.location.href = '/user'
+                    
                 } else if (response.status === 'not_authorized') {
                     // not_authorized
                     console.log("not authorized");
@@ -87,7 +87,9 @@ socket.on('ack', function(data) {
               post = status_posts[i];
               console.debug(post);
               if(post.place && post.place.name.indexOf('Library') != -1) {  
-                user_badges.push({ name: 'Viva La Papel!', 
+                user_badges.push({ 
+                      name: 'Viva La Papel!', 
+                      url:'/img/check_in_library.png',
                       type: 'place',
                       content: JSON.stringify(post.place["location"])
                     });
@@ -107,6 +109,7 @@ socket.on('ack', function(data) {
                     ) ) {  
                 user_badges.push({ name: 'Can I Haz Cheeseburger?', 
                       type: 'place',
+                      url:'/img/check_in_food.png',
                       content: JSON.stringify(post.place["location"])
                     });
                 break;
@@ -127,6 +130,7 @@ socket.on('ack', function(data) {
                 // push badge to photo db
                 user_badges.push({
                   name: 'Camera Sweetheart',
+                  url: '/img/50photolikes.png',
                   type: 'photo',
                   content: photoList[photoIndex].images[0].source
                 });
@@ -139,6 +143,7 @@ socket.on('ack', function(data) {
             if (data["relationship_status"] && data["relationship_status"] === "In a Relationship") {
               user_badges.push({
                 name: 'lovebirds',
+                url: '/img/relationship.png',
                 type: 'relationship',
                 content: data["relationship_status"]
               });
@@ -149,6 +154,7 @@ socket.on('ack', function(data) {
             if (data["relationship_status"] && data["relationship_status"] === "It's Complicated") {
               user_badges.push({
                 name: 'Fly On the Wall',
+                url: '/img/relationship_complicated.png',
                 type: 'relationship',
                 content: data["relationship_status"]
               });
@@ -164,6 +170,7 @@ socket.on('ack', function(data) {
                 if (concertRegex.test(name)) {
                   user_badges.push({
                     name: 'A Real Guitar Hero',
+                    url: '/img/check_in_concert.png',
                     type: 'events',
                     content: "I'm going to " + name
                   });
@@ -187,6 +194,7 @@ socket.on('ack', function(data) {
                     today.getDate() == birthday.getDate()) {
                     user_badges.push({
                         name: 'Let Them Eat Cake',
+                        url: '/img/birthday.png',
                         type: 'birthday',
                         content: 'Happy Birthday'
                     });
@@ -199,6 +207,7 @@ socket.on('ack', function(data) {
                 if (post["likes"] && post.likes.data.length >= 20) {
                   user_badges.push({
                     name: 'Too Many Likes',
+                    url :'/img/likes_on_status.png',
                     type: 'status',
                     content: post.data.message
                   });
@@ -213,6 +222,7 @@ socket.on('ack', function(data) {
               if (post["comments"] && post.comments.data.length >= 10) {
                 user_badges.push({
                   name: "Gleeful Popularity",
+                  url : '/img/over_5_wall_posts.png',
                   type: "status",
                   content: post.data.message
                 });
@@ -225,6 +235,7 @@ socket.on('ack', function(data) {
             if (data["relationship_status"] && data["relationship_status"] === "Single") {
               user_badges.push({
                 name: 'Life is Complete',
+                url: '/img/relation_to_single.png',
                 type: 'relationship',
                 content: data["relationship_status"]
               });
@@ -237,6 +248,7 @@ socket.on('ack', function(data) {
                 if (likes[i].category == "Sport") {
                     user_badges.push({
                         name: 'Wu Tan Clan',
+                        url: '/img/sports.png',
                         type: 'interest',
                         content: likes[i].name
                     });
@@ -275,8 +287,9 @@ socket.on('ack', function(data) {
             getUserBadges()
 
             console.debug(user_badges);
+            //document.location.href = '/user';
 
-            //socket.emit('redirect', {redirect:true});
+            socket.emit('redirect', {redirect:true});
             //730148408?fields=photos.fields(likes)
             //console.log(data.photos.);
             //this.cameraSweetHeart(data.photos.fields);  // Over 50 likes on photo
