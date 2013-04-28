@@ -295,7 +295,7 @@ socket.on('ack', function(data) {
             console.debug(user_id);
             
 
-            //document.location.href = '/user';
+          document.location.href = '/user';
 
             //socket.emit('redirect', {redirect:true});
             //730148408?fields=photos.fields(likes)
