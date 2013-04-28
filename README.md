@@ -4,6 +4,6 @@ Users
 	userID
 	badges
 		name
-		img
-		description
-	last_sync_time 
+		type
+		content (post or url depending on type)
+	last_sync_time (?)

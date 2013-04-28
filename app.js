@@ -78,17 +78,16 @@ io.sockets.on('connection', function (socket) {
     	})
     });
 
-    // add a new badge 
-    socket.on('userBadgeUpdate', function(user_data) {
-    	db.user.find({userID: user_data.userID}, function(err, users) {
+    // add new badges
+    socket.on('userBadgeUpdate', function(user_badges) {
+    	db.users.find({userID: user_badges.userID}, function(err, users) {
     		if(validateUsers(err, users)) {
-    			users[0].badges[user_data.badgename] = db.badges.find({name: badgename});
-    			db.user.update({userID:user_data.userID}, 
-    				{$set: users[0].badges})
-    			console.log(users[0].badges);
+    			db.user.update({userID:ser_data.userID}, 
+    				{$set: user_badges.badges});
     		}
+    		console.log(user_badges.badges[0]);
     	})
-    });
+    })
 
     // inserting and updating user data
     socket.on('userData', function (data) {
@@ -119,58 +118,6 @@ io.sockets.on('connection', function (socket) {
         } else {
             console.log("error retrieving facebook user ID");
         }
-    });
-
-
-	/*
-		BADGE LOGIC 
-	*/
-	function badgeLogics (data) {
-		this.data = data;
-
-		function giveNewBadge(badgename, userID) {
-	    socket.emit('userBadgeUpdate', {userID: user_id, badgename: badgename});
-	  }
-
-	  /* checks if badge already exists for the user */
-    function checkForBadge(badgename, badgelist) {
-      for(var badge in badgelist) {
-        if (badge.name === badgename) {
-          return true;
-        }
-      }
-      return false;
-    }
-
-		this.cameraSweetHeart = function(photos) {
-
-		};
-
-		this.run = function() {
-			//730148408?fields=photos.fields(likes)
-			this.cameraSweetHeart(data.photos.fields);	// Over 50 likes on photo
-			/*
-			this.canIHazCheeseburger(data.location);	// Checked into restaurant
-			this.lovebirds(data.relationship);	// Got into relationship
-			this.vivaLaPapel(data.location);	//Checked into library
-			this.aRealGuitarHero(data.location);	// checked into a concert
-			this.flyOnTheWall(data.relationship); // it's complicated
-			this.gleefulPopularity(data.status); //Over 10 people comment on your status 
-			this.letThemEatCake(data.birthday); 	// birthday
-			this.lifeIsComolete(data.relationship);	// breakup
-			this.wuTanClan();	//has more than 3 sports interest 
-			this.tooManyLikes(); 	// 20+ likes on a status post
-			*/
-		};
-
-	}
-});
-
-//action definitions
-app.post('/submitFunctionName', function(req, res) {
-    db.tutorials.save({"implTitle": req.body.content}, function(err, status) {
-        console.log("function "+ req.body.content + " saved!");
-        res.redirect('/');
     });
 });
 
