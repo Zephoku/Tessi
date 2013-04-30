@@ -7,3 +7,5 @@ Users
 		type
 		content (post or url depending on type)
 	last_sync_time (?)
+
+  added
