@@ -8,8 +8,8 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 //for heroku
-//var dbURL = "mongodb://localhost/codeondb";
-var dbURL = "codeondb";
+var dbURL = "mongodb://localhost/tessi";
+//var dbURL = "codeondb";
 var collections = ["users"];
 var db = require("mongojs").connect(dbURL,collections);
 
