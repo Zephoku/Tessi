@@ -291,7 +291,7 @@ function generateCannonball() {
   // continue this
 
   var coinFlip = Math.floor(Math.random()*100);
-  if (coinFlip > 75)
+  if (coinFlip > 50)
   {
     var can = new cannonball();
 
