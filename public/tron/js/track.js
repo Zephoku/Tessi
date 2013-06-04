@@ -141,7 +141,7 @@ document.addEventListener("facetrackingEvent", function( event ) {
   if (event.detection == "CS") {
     // Debug callbacks
     drawFaceRectangle(event);
-    updateFaceDebugMessages(event);
+    //updateFaceDebugMessages(event);
 
     // Camera movement
     updateCameraMovement(event);
